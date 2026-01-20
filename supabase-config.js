@@ -2,9 +2,9 @@
 // Self-hosted on Coolify
 
 const SUPABASE_CONFIG = {
-    // API URL (Proxied via Nginx to avoid Mixed Content)
-    // The trailing slash is important if Nginx location has it
-    url: window.location.origin + '/supabase',
+    // API URL (Kong Gateway) - HTTPS Forced.
+    // NOTE: You must accept the self-signed certificate at this URL once manually.
+    url: 'https://supabasekong-wckks4gsg8owkososoo8sosg.128.140.44.162.sslip.io',
 
     // Anon key (public, safe to expose)
     anonKey: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJzdXBhYmFzZSIsImlhdCI6MTc2ODkwNjQ0MCwiZXhwIjo0OTI0NTgwMDQwLCJyb2xlIjoiYW5vbiJ9.aePQztzDdhmgXjPlJ9zxh4_Qf5ex7Au7UyEiF_jzXK0',
