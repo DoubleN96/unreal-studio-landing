@@ -2,8 +2,8 @@
 // Self-hosted on Coolify
 
 const SUPABASE_CONFIG = {
-    // API URL (Kong Gateway)
-    url: 'http://supabasekong-wckks4gsg8owkososoo8sosg.128.140.44.162.sslip.io:8000',
+    // API URL (Kong Gateway) - HTTPS Forced to avoid Mixed Content
+    url: 'https://supabasekong-wckks4gsg8owkososoo8sosg.128.140.44.162.sslip.io',
 
     // Anon key (public, safe to expose)
     anonKey: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJzdXBhYmFzZSIsImlhdCI6MTc2ODkwNjQ0MCwiZXhwIjo0OTI0NTgwMDQwLCJyb2xlIjoiYW5vbiJ9.aePQztzDdhmgXjPlJ9zxh4_Qf5ex7Au7UyEiF_jzXK0',
