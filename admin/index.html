@@ -1,0 +1,2073 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel | Unreal Studio CMS</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚙️</text></svg>">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg-primary: #0f0f0f;
+            --bg-secondary: #1a1a1a;
+            --bg-tertiary: #242424;
+            --text-primary: #ffffff;
+            --text-secondary: #a1a1a1;
+            --text-muted: #6b6b6b;
+            --accent: #8B7355;
+            --accent-hover: #a08566;
+            --success: #22c55e;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --border: #2a2a2a;
+            --radius: 12px;
+            --radius-sm: 8px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+        }
+
+        /* Layout */
+        .app {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        .sidebar {
+            width: 260px;
+            background: var(--bg-secondary);
+            border-right: 1px solid var(--border);
+            padding: 24px 0;
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+        }
+
+        .sidebar-header {
+            padding: 0 24px 24px;
+            border-bottom: 1px solid var(--border);
+            margin-bottom: 24px;
+        }
+
+        .sidebar-logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            color: var(--text-primary);
+        }
+
+        .sidebar-logo-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--accent);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 18px;
+        }
+
+        .sidebar-logo-text {
+            font-size: 18px;
+            font-weight: 700;
+        }
+
+        .sidebar-logo-text span {
+            font-weight: 400;
+            color: var(--text-secondary);
+        }
+
+        .nav-section {
+            margin-bottom: 32px;
+        }
+
+        .nav-section-title {
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-muted);
+            padding: 0 24px;
+            margin-bottom: 12px;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 24px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: all 0.2s;
+            cursor: pointer;
+            border: none;
+            background: none;
+            width: 100%;
+            font-size: 14px;
+            font-family: inherit;
+        }
+
+        .nav-item:hover,
+        .nav-item.active {
+            background: var(--bg-tertiary);
+            color: var(--text-primary);
+        }
+
+        .nav-item.active {
+            border-left: 3px solid var(--accent);
+            padding-left: 21px;
+        }
+
+        .nav-item .material-icons-outlined {
+            font-size: 20px;
+        }
+
+        .main-content {
+            flex: 1;
+            margin-left: 260px;
+            padding: 32px;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 32px;
+        }
+
+        .header h1 {
+            font-size: 28px;
+            font-weight: 700;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 12px;
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 20px;
+            font-size: 14px;
+            font-weight: 600;
+            border-radius: var(--radius-sm);
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--accent-hover);
+        }
+
+        .btn-secondary {
+            background: var(--bg-tertiary);
+            color: var(--text-primary);
+            border: 1px solid var(--border);
+        }
+
+        .btn-secondary:hover {
+            background: var(--border);
+        }
+
+        .btn-danger {
+            background: var(--danger);
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background: #dc2626;
+        }
+
+        .btn-sm {
+            padding: 8px 12px;
+            font-size: 13px;
+        }
+
+        /* Cards */
+        .card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 24px;
+            margin-bottom: 24px;
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .card-title {
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 24px;
+            margin-bottom: 32px;
+        }
+
+        .stat-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 24px;
+        }
+
+        .stat-label {
+            font-size: 13px;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+        }
+
+        .stat-value {
+            font-size: 32px;
+            font-weight: 700;
+        }
+
+        .stat-value.editable {
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        .stat-value.editable:hover {
+            color: var(--accent);
+        }
+
+        /* Table */
+        .table-container {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            text-align: left;
+            padding: 16px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        th {
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--text-secondary);
+            background: var(--bg-tertiary);
+        }
+
+        td {
+            font-size: 14px;
+        }
+
+        tr:hover {
+            background: var(--bg-tertiary);
+        }
+
+        .status-badge {
+            display: inline-flex;
+            padding: 4px 12px;
+            border-radius: 100px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .status-badge.pre-sale {
+            background: rgba(245, 158, 11, 0.2);
+            color: var(--warning);
+        }
+
+        .status-badge.in-construction {
+            background: rgba(59, 130, 246, 0.2);
+            color: #3b82f6;
+        }
+
+        .status-badge.completed {
+            background: rgba(34, 197, 94, 0.2);
+            color: var(--success);
+        }
+
+        .status-badge.new {
+            background: rgba(139, 115, 85, 0.2);
+            color: var(--accent);
+        }
+
+        .status-badge.contacted {
+            background: rgba(59, 130, 246, 0.2);
+            color: #3b82f6;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 8px;
+        }
+
+        .action-btn {
+            width: 32px;
+            height: 32px;
+            border-radius: 6px;
+            border: 1px solid var(--border);
+            background: var(--bg-tertiary);
+            color: var(--text-secondary);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+
+        .action-btn:hover {
+            background: var(--border);
+            color: var(--text-primary);
+        }
+
+        .action-btn.delete:hover {
+            background: var(--danger);
+            border-color: var(--danger);
+            color: white;
+        }
+
+        .action-btn .material-icons-outlined {
+            font-size: 16px;
+        }
+
+        /* Forms */
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+        }
+
+        .form-input,
+        .form-select,
+        .form-textarea {
+            width: 100%;
+            padding: 12px 16px;
+            font-size: 14px;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            color: var(--text-primary);
+            font-family: inherit;
+            transition: border-color 0.2s;
+        }
+
+        .form-input:focus,
+        .form-select:focus,
+        .form-textarea:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+
+        .form-textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+        }
+
+        .form-row-3 {
+            grid-template-columns: repeat(3, 1fr);
+        }
+
+        /* Modal */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.8);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            padding: 24px;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            width: 100%;
+            max-width: 600px;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 24px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .modal-title {
+            font-size: 20px;
+            font-weight: 600;
+        }
+
+        .modal-close {
+            width: 32px;
+            height: 32px;
+            border-radius: 6px;
+            border: none;
+            background: var(--bg-tertiary);
+            color: var(--text-secondary);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-close:hover {
+            background: var(--border);
+            color: var(--text-primary);
+        }
+
+        .modal-body {
+            padding: 24px;
+        }
+
+        .modal-footer {
+            display: flex;
+            justify-content: flex-end;
+            gap: 12px;
+            padding: 24px;
+            border-top: 1px solid var(--border);
+        }
+
+        /* Login Page */
+        .login-container {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--bg-primary);
+        }
+
+        .login-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 48px;
+            width: 100%;
+            max-width: 420px;
+        }
+
+        .login-header {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+
+        .login-logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+
+        .login-title {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .login-subtitle {
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+
+        .login-error {
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid var(--danger);
+            color: var(--danger);
+            padding: 12px 16px;
+            border-radius: var(--radius-sm);
+            margin-bottom: 20px;
+            font-size: 14px;
+            display: none;
+        }
+
+        .login-error.active {
+            display: block;
+        }
+
+        /* Alerts */
+        .alert {
+            padding: 16px 20px;
+            border-radius: var(--radius-sm);
+            margin-bottom: 24px;
+            display: none;
+        }
+
+        .alert.active {
+            display: block;
+        }
+
+        .alert-success {
+            background: rgba(34, 197, 94, 0.1);
+            border: 1px solid var(--success);
+            color: var(--success);
+        }
+
+        .alert-error {
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid var(--danger);
+            color: var(--danger);
+        }
+
+        /* Image Preview */
+        .image-preview {
+            width: 100%;
+            height: 200px;
+            background: var(--bg-tertiary);
+            border: 2px dashed var(--border);
+            border-radius: var(--radius-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s;
+            overflow: hidden;
+        }
+
+        .image-preview:hover,
+        .image-preview.active {
+            border-color: var(--accent);
+        }
+
+        .image-preview.active {
+            background: rgba(139, 115, 85, 0.1);
+        }
+
+        .image-preview img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .image-preview-placeholder {
+            text-align: center;
+            color: var(--text-muted);
+        }
+
+        .image-preview-placeholder .material-icons-outlined {
+            font-size: 48px;
+            margin-bottom: 8px;
+        }
+
+        /* Loading */
+        .loading {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 48px;
+            color: var(--text-secondary);
+        }
+
+        .spinner {
+            width: 24px;
+            height: 24px;
+            border: 2px solid var(--border);
+            border-top-color: var(--accent);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            margin-right: 12px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 48px;
+            color: var(--text-secondary);
+        }
+
+        .empty-state .material-icons-outlined {
+            font-size: 64px;
+            margin-bottom: 16px;
+            color: var(--text-muted);
+        }
+
+        .empty-state h3 {
+            font-size: 18px;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                display: none;
+            }
+
+            .main-content {
+                margin-left: 0;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+
+    <!-- Load Supabase Config -->
+    <script src="../supabase-config.js"></script>
+
+    <!-- React -->
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <script type="text/babel">
+        const { useState, useEffect, useCallback } = React;
+
+        // Helper Functions
+        const formatCurrency = (value) => {
+            return new Intl.NumberFormat('es-ES', {
+                style: 'currency',
+                currency: 'EUR',
+                minimumFractionDigits: 0
+            }).format(value);
+        };
+
+        const formatDate = (dateString) => {
+            return new Date(dateString).toLocaleDateString('es-ES', {
+                day: '2-digit',
+                month: 'short',
+                year: 'numeric'
+            });
+        };
+
+        // Status Maps
+        const statusLabels = {
+            'PRE_SALE': 'Pre-venta',
+            'IN_CONSTRUCTION': 'En Construcción',
+            'COMPLETED': 'Completado'
+        };
+
+        const leadStatusLabels = {
+            'NEW': 'Nuevo',
+            'CONTACTED': 'Contactado',
+            'QUALIFIED': 'Cualificado',
+            'CONVERTED': 'Convertido',
+            'LOST': 'Perdido'
+        };
+
+        const areaLabels = {
+            'ULUWATU': 'Uluwatu',
+            'CANGGU': 'Canggu',
+            'UBUD': 'Ubud'
+        };
+
+        // Login Component
+        function LoginPage({ onLogin }) {
+            const [email, setEmail] = useState('');
+            const [password, setPassword] = useState('');
+            const [error, setError] = useState('');
+            const [loading, setLoading] = useState(false);
+
+            const handleSubmit = async (e) => {
+                e.preventDefault();
+                setLoading(true);
+                setError('');
+
+                try {
+                    const result = await supabase.signIn(email, password);
+                    onLogin(result.user);
+                } catch (err) {
+                    setError(err.message || 'Error al iniciar sesión');
+                } finally {
+                    setLoading(false);
+                }
+            };
+
+            return (
+                <div className="login-container">
+                    <div className="login-card">
+                        <div className="login-header">
+                            <div className="login-logo">
+                                <div className="sidebar-logo-icon">U</div>
+                                <span className="sidebar-logo-text">UNREAL <span>Studio</span></span>
+                            </div>
+                            <h1 className="login-title">Panel de Administración</h1>
+                            <p className="login-subtitle">Ingresa tus credenciales para continuar</p>
+                        </div>
+
+                        <div className={`login-error ${error ? 'active' : ''}`}>
+                            {error}
+                        </div>
+
+                        <form onSubmit={handleSubmit}>
+                            <div className="form-group">
+                                <label className="form-label">Email</label>
+                                <input
+                                    type="email"
+                                    className="form-input"
+                                    value={email}
+                                    onChange={(e) => setEmail(e.target.value)}
+                                    placeholder="admin@unrealstudio.es"
+                                    required
+                                />
+                            </div>
+
+                            <div className="form-group">
+                                <label className="form-label">Contraseña</label>
+                                <input
+                                    type="password"
+                                    className="form-input"
+                                    value={password}
+                                    onChange={(e) => setPassword(e.target.value)}
+                                    placeholder="••••••••"
+                                    required
+                                />
+                            </div>
+
+                            <button type="submit" className="btn btn-primary" style={{ width: '100%' }} disabled={loading}>
+                                {loading ? (
+                                    <>
+                                        <span className="spinner" style={{ width: 16, height: 16, marginRight: 8 }}></span>
+                                        Iniciando sesión...
+                                    </>
+                                ) : 'Iniciar Sesión'}
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            );
+        }
+
+        // Sidebar Component
+        function Sidebar({ currentView, setCurrentView, onLogout }) {
+            const navItems = [
+                { id: 'dashboard', label: 'Dashboard', icon: 'dashboard' },
+                { id: 'projects', label: 'Proyectos', icon: 'apartment' },
+                { id: 'metrics', label: 'Métricas', icon: 'analytics' },
+                { id: 'leads', label: 'Leads', icon: 'people' },
+                { id: 'blog', label: 'Blog', icon: 'article' },
+            ];
+
+            return (
+                <div className="sidebar">
+                    <div className="sidebar-header">
+                        <a href="/" className="sidebar-logo">
+                            <div className="sidebar-logo-icon">U</div>
+                            <span className="sidebar-logo-text">UNREAL <span>Studio</span></span>
+                        </a>
+                    </div>
+
+                    <div className="nav-section">
+                        <div className="nav-section-title">General</div>
+                        {navItems.map(item => (
+                            <button
+                                key={item.id}
+                                className={`nav-item ${currentView === item.id ? 'active' : ''}`}
+                                onClick={() => setCurrentView(item.id)}
+                            >
+                                <span className="material-icons-outlined">{item.icon}</span>
+                                {item.label}
+                            </button>
+                        ))}
+                    </div>
+
+                    <div className="nav-section">
+                        <div className="nav-section-title">Cuenta</div>
+                        <button className="nav-item" onClick={onLogout}>
+                            <span className="material-icons-outlined">logout</span>
+                            Cerrar sesión
+                        </button>
+                    </div>
+                </div>
+            );
+        }
+
+        // Dashboard Component
+        function Dashboard({ projects, metrics, leads, blogPosts }) {
+            return (
+                <>
+                    <div className="header">
+                        <h1>Dashboard</h1>
+                    </div>
+
+                    <div className="stats-grid">
+                        <div className="stat-card">
+                            <div className="stat-label">Proyectos Activos</div>
+                            <div className="stat-value">{projects.filter(p => p.published).length}</div>
+                        </div>
+                        <div className="stat-card">
+                            <div className="stat-label">Posts Blog</div>
+                            <div className="stat-value">{blogPosts?.length || 0}</div>
+                        </div>
+                        <div className="stat-card">
+                            <div className="stat-label">Capital Gestionado</div>
+                            <div className="stat-value">{formatCurrency(metrics?.capital_managed || 0)}</div>
+                        </div>
+                        <div className="stat-card">
+                            <div className="stat-label">Leads Este Mes</div>
+                            <div className="stat-value">{leads.length}</div>
+                        </div>
+                    </div>
+
+                    <div className="card">
+                        <div className="card-header">
+                            <h3 className="card-title">Últimos Leads</h3>
+                        </div>
+                        <div className="table-container">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Nombre</th>
+                                        <th>Email</th>
+                                        <th>Estado</th>
+                                        <th>Fecha</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {leads.slice(0, 5).map(lead => (
+                                        <tr key={lead.id}>
+                                            <td>{lead.name || 'Sin nombre'}</td>
+                                            <td>{lead.email}</td>
+                                            <td>
+                                                <span className={`status-badge ${lead.status?.toLowerCase()}`}>
+                                                    {leadStatusLabels[lead.status] || lead.status}
+                                                </span>
+                                            </td>
+                                            <td>{formatDate(lead.created_at)}</td>
+                                        </tr>
+                                    ))}
+                                    {leads.length === 0 && (
+                                        <tr>
+                                            <td colSpan="4" style={{ textAlign: 'center', color: 'var(--text-muted)' }}>
+                                                No hay leads todavía
+                                            </td>
+                                        </tr>
+                                    )}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </>
+            );
+        }
+
+        // Image Uploader Component
+        function ImageUploader({ value, onChange, bucket = 'project-images' }) {
+            const [uploading, setUploading] = useState(false);
+            const [dragActive, setDragActive] = useState(false);
+            const [error, setError] = useState('');
+
+            const handleDrag = (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                if (e.type === "dragenter" || e.type === "dragover") {
+                    setDragActive(true);
+                } else if (e.type === "dragleave") {
+                    setDragActive(false);
+                }
+            };
+
+            const handleDrop = (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                setDragActive(false);
+                if (e.dataTransfer.files && e.dataTransfer.files[0]) {
+                    handleUpload(e.dataTransfer.files[0]);
+                }
+            };
+
+            const handleChange = (e) => {
+                e.preventDefault();
+                if (e.target.files && e.target.files[0]) {
+                    handleUpload(e.target.files[0]);
+                }
+            };
+
+            const handleUpload = async (file) => {
+                if (!file.type.startsWith('image/')) {
+                    setError('Solo se permiten imágenes (JPG, PNG, WEBP)');
+                    return;
+                }
+                if (file.size > 5 * 1024 * 1024) {
+                    setError('La imagen no debe superar los 5MB');
+                    return;
+                }
+
+                setUploading(true);
+                setError('');
+
+                try {
+                    const fileExt = file.name.split('.').pop();
+                    const fileName = `${Date.now()}-${Math.random().toString(36).substring(7)}.${fileExt}`;
+                    const filePath = `${fileName}`;
+
+                    const { error: uploadError } = await supabase.storage
+                        .from(bucket)
+                        .upload(filePath, file);
+
+                    if (uploadError) throw uploadError;
+
+                    const { data } = supabase.storage
+                        .from(bucket)
+                        .getPublicUrl(filePath);
+
+                    onChange(data.publicUrl);
+                } catch (err) {
+                    setError(err.message || 'Error al subir la imagen');
+                    console.error('Upload error:', err);
+                } finally {
+                    setUploading(false);
+                }
+            };
+
+            const handleRemove = (e) => {
+                e.stopPropagation();
+                e.preventDefault();
+                if (confirm('¿Quieres quitar esta imagen?')) {
+                    onChange('');
+                }
+            };
+
+            return (
+                <div className="form-group">
+                    <label className="form-label">Imagen Principal</label>
+                    <div 
+                        className={`image-preview ${dragActive ? 'active' : ''}`}
+                        onDragEnter={handleDrag}
+                        onDragLeave={handleDrag}
+                        onDragOver={handleDrag}
+                        onDrop={handleDrop}
+                        onClick={() => document.getElementById('image-upload').click()}
+                    >
+                        {uploading ? (
+                            <div className="loading">
+                                <span className="spinner"></span>
+                                Subiendo...
+                            </div>
+                        ) : value ? (
+                            <div style={{ position: 'relative', width: '100%', height: '100%' }}>
+                                <img src={value} alt="Preview" />
+                                <button 
+                                    type="button"
+                                    className="action-btn delete" 
+                                    style={{ position: 'absolute', top: 8, right: 8, zIndex: 10 }}
+                                    onClick={handleRemove}
+                                >
+                                    <span className="material-icons-outlined">close</span>
+                                </button>
+                            </div>
+                        ) : (
+                            <div className="image-preview-placeholder">
+                                <span className="material-icons-outlined">cloud_upload</span>
+                                <p>Arrastra una imagen o haz clic</p>
+                                <span style={{ fontSize: 11, color: 'var(--text-muted)' }}>JPG, PNG, WEBP (Max 5MB)</span>
+                            </div>
+                        )}
+                        <input 
+                            type="file" 
+                            id="image-upload" 
+                            style={{ display: 'none' }} 
+                            accept="image/*"
+                            onChange={handleChange}
+                            disabled={uploading}
+                        />
+                    </div>
+                    {error && <div className="login-error active" style={{ marginTop: 8 }}>{error}</div>}
+                </div>
+            );
+        }
+
+        // Projects Component
+        function Projects({ projects, onRefresh }) {
+            const [showModal, setShowModal] = useState(false);
+            const [editingProject, setEditingProject] = useState(null);
+            const [alert, setAlert] = useState({ type: '', message: '', active: false });
+
+            const showAlert = (type, message) => {
+                setAlert({ type, message, active: true });
+                setTimeout(() => setAlert({ ...alert, active: false }), 3000);
+            };
+
+            const handleEdit = (project) => {
+                setEditingProject(project);
+                setShowModal(true);
+            };
+
+            const handleNew = () => {
+                setEditingProject(null);
+                setShowModal(true);
+            };
+
+            const handleDelete = async (id) => {
+                if (!confirm('¿Estás seguro de eliminar este proyecto?')) return;
+
+                try {
+                    await supabase.delete('projects', { 'id': `eq.${id}` });
+                    showAlert('success', 'Proyecto eliminado correctamente');
+                    onRefresh();
+                } catch (err) {
+                    showAlert('error', err.message);
+                }
+            };
+
+            const handleSave = async (projectData) => {
+                try {
+                    if (editingProject) {
+                        await supabase.update('projects', projectData, { 'id': `eq.${editingProject.id}` });
+                        showAlert('success', 'Proyecto actualizado correctamente');
+                    } else {
+                        await supabase.insert('projects', projectData);
+                        showAlert('success', 'Proyecto creado correctamente');
+                    }
+                    setShowModal(false);
+                    onRefresh();
+                } catch (err) {
+                    showAlert('error', err.message);
+                }
+            };
+
+            return (
+                <>
+                    <div className="header">
+                        <h1>Proyectos</h1>
+                        <div className="header-actions">
+                            <button className="btn btn-primary" onClick={handleNew}>
+                                <span className="material-icons-outlined">add</span>
+                                Nuevo Proyecto
+                            </button>
+                        </div>
+                    </div>
+
+                    <div className={`alert alert-${alert.type} ${alert.active ? 'active' : ''}`}>
+                        {alert.message}
+                    </div>
+
+                    <div className="card">
+                        <div className="table-container">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Proyecto</th>
+                                        <th>Zona</th>
+                                        <th>Estado</th>
+                                        <th>Precio</th>
+                                        <th>ROI</th>
+                                        <th>Publicado</th>
+                                        <th>Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {projects.map(project => (
+                                        <tr key={project.id}>
+                                            <td>
+                                                <strong>{project.name}</strong>
+                                                <div style={{ fontSize: 12, color: 'var(--text-muted)' }}>{project.location}</div>
+                                            </td>
+                                            <td>{areaLabels[project.area] || project.area}</td>
+                                            <td>
+                                                <span className={`status-badge ${project.status?.toLowerCase().replace('_', '-')}`}>
+                                                    {statusLabels[project.status] || project.status}
+                                                </span>
+                                            </td>
+                                            <td>{formatCurrency(project.price_from)}</td>
+                                            <td>{project.roi_projected}%</td>
+                                            <td>{project.published ? '✓' : '—'}</td>
+                                            <td>
+                                                <div className="action-buttons">
+                                                    <button className="action-btn" onClick={() => handleEdit(project)}>
+                                                        <span className="material-icons-outlined">edit</span>
+                                                    </button>
+                                                    <button className="action-btn delete" onClick={() => handleDelete(project.id)}>
+                                                        <span className="material-icons-outlined">delete</span>
+                                                    </button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    ))}
+                                    {projects.length === 0 && (
+                                        <tr>
+                                            <td colSpan="7">
+                                                <div className="empty-state">
+                                                    <span className="material-icons-outlined">apartment</span>
+                                                    <h3>Sin proyectos</h3>
+                                                    <p>Crea tu primer proyecto para empezar</p>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    )}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    {showModal && (
+                        <ProjectModal
+                            project={editingProject}
+                            onClose={() => setShowModal(false)}
+                            onSave={handleSave}
+                        />
+                    )}
+                </>
+            );
+        }
+
+        // Project Modal Component
+        function ProjectModal({ project, onClose, onSave }) {
+            const [formData, setFormData] = useState(project || {
+                name: '',
+                slug: '',
+                location: '',
+                area: 'ULUWATU',
+                main_image: '',
+                status: 'PRE_SALE',
+                price_from: '',
+                currency: 'EUR',
+                roi_projected: '',
+                bedrooms: '',
+                bathrooms: '',
+                area_m2: '',
+                published: true,
+                sort_order: 0
+            });
+            const [loading, setLoading] = useState(false);
+
+            const handleChange = (e) => {
+                const { name, value, type, checked } = e.target;
+                setFormData(prev => ({
+                    ...prev,
+                    [name]: type === 'checkbox' ? checked : value
+                }));
+
+                // Auto-generate slug from name
+                if (name === 'name') {
+                    const slug = value.toLowerCase()
+                        .replace(/[^a-z0-9]+/g, '-')
+                        .replace(/^-+|-+$/g, '');
+                    setFormData(prev => ({ ...prev, slug }));
+                }
+            };
+
+            const handleSubmit = async (e) => {
+                e.preventDefault();
+                setLoading(true);
+
+                const dataToSave = {
+                    ...formData,
+                    price_from: parseFloat(formData.price_from) || 0,
+                    roi_projected: parseFloat(formData.roi_projected) || 0,
+                    bedrooms: parseInt(formData.bedrooms) || 0,
+                    bathrooms: parseInt(formData.bathrooms) || 0,
+                    area_m2: parseFloat(formData.area_m2) || 0,
+                    sort_order: parseInt(formData.sort_order) || 0
+                };
+
+                await onSave(dataToSave);
+                setLoading(false);
+            };
+
+            return (
+                <div className="modal-overlay active" onClick={(e) => e.target === e.currentTarget && onClose()}>
+                    <div className="modal">
+                        <div className="modal-header">
+                            <h2 className="modal-title">{project ? 'Editar Proyecto' : 'Nuevo Proyecto'}</h2>
+                            <button className="modal-close" onClick={onClose}>
+                                <span className="material-icons-outlined">close</span>
+                            </button>
+                        </div>
+
+                        <form onSubmit={handleSubmit}>
+                            <div className="modal-body">
+                                <div className="form-row">
+                                    <div className="form-group">
+                                        <label className="form-label">Nombre</label>
+                                        <input
+                                            type="text"
+                                            name="name"
+                                            className="form-input"
+                                            value={formData.name}
+                                            onChange={handleChange}
+                                            placeholder="Golf Bay Lofts"
+                                            required
+                                        />
+                                    </div>
+                                    <div className="form-group">
+                                        <label className="form-label">Slug</label>
+                                        <input
+                                            type="text"
+                                            name="slug"
+                                            className="form-input"
+                                            value={formData.slug}
+                                            onChange={handleChange}
+                                            placeholder="golf-bay-lofts"
+                                            required
+                                        />
+                                    </div>
+                                </div>
+
+                                <div className="form-group">
+                                    <label className="form-label">Ubicación</label>
+                                    <input
+                                        type="text"
+                                        name="location"
+                                        className="form-input"
+                                        value={formData.location}
+                                        onChange={handleChange}
+                                        placeholder="Balangan, Uluwatu, Bali"
+                                        required
+                                    />
+                                </div>
+
+                                <div className="form-row form-row-3">
+                                    <div className="form-group">
+                                        <label className="form-label">Zona</label>
+                                        <select
+                                            name="area"
+                                            className="form-select"
+                                            value={formData.area}
+                                            onChange={handleChange}
+                                        >
+                                            <option value="ULUWATU">Uluwatu</option>
+                                            <option value="CANGGU">Canggu</option>
+                                            <option value="UBUD">Ubud</option>
+                                        </select>
+                                    </div>
+                                    <div className="form-group">
+                                        <label className="form-label">Estado</label>
+                                        <select
+                                            name="status"
+                                            className="form-select"
+                                            value={formData.status}
+                                            onChange={handleChange}
+                                        >
+                                            <option value="PRE_SALE">Pre-venta</option>
+                                            <option value="IN_CONSTRUCTION">En Construcción</option>
+                                            <option value="COMPLETED">Completado</option>
+                                        </select>
+                                    </div>
+                                    <div className="form-group">
+                                        <label className="form-label">Moneda</label>
+                                        <select
+                                            name="currency"
+                                            className="form-select"
+                                            value={formData.currency}
+                                            onChange={handleChange}
+                                        >
+                                            <option value="EUR">EUR (€)</option>
+                                            <option value="USD">USD ($)</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div className="form-row">
+                                    <div className="form-group">
+                                        <label className="form-label">Precio Desde (€)</label>
+                                        <input
+                                            type="number"
+                                            name="price_from"
+                                            className="form-input"
+                                            value={formData.price_from}
+                                            onChange={handleChange}
+                                            placeholder="96907"
+                                            required
+                                        />
+                                    </div>
+                                    <div className="form-group">
+                                        <label className="form-label">ROI Proyectado (%)</label>
+                                        <input
+                                            type="number"
+                                            step="0.1"
+                                            name="roi_projected"
+                                            className="form-input"
+                                            value={formData.roi_projected}
+                                            onChange={handleChange}
+                                            placeholder="18.0"
+                                        />
+                                    </div>
+                                </div>
+
+                                <div className="form-row form-row-3">
+                                    <div className="form-group">
+                                        <label className="form-label">Habitaciones</label>
+                                        <input
+                                            type="number"
+                                            name="bedrooms"
+                                            className="form-input"
+                                            value={formData.bedrooms}
+                                            onChange={handleChange}
+                                            placeholder="3"
+                                        />
+                                    </div>
+                                    <div className="form-group">
+                                        <label className="form-label">Baños</label>
+                                        <input
+                                            type="number"
+                                            name="bathrooms"
+                                            className="form-input"
+                                            value={formData.bathrooms}
+                                            onChange={handleChange}
+                                            placeholder="2"
+                                        />
+                                    </div>
+                                    <div className="form-group">
+                                        <label className="form-label">Área (m²)</label>
+                                        <input
+                                            type="number"
+                                            step="0.01"
+                                            name="area_m2"
+                                            className="form-input"
+                                            value={formData.area_m2}
+                                            onChange={handleChange}
+                                            placeholder="150"
+                                        />
+                                    </div>
+                                </div>
+
+                                <ImageUploader 
+                                    value={formData.main_image} 
+                                    onChange={(url) => setFormData(prev => ({ ...prev, main_image: url }))}
+                                />
+
+                                <div className="form-row">
+                                    <div className="form-group">
+                                        <label className="form-label">Orden</label>
+                                        <input
+                                            type="number"
+                                            name="sort_order"
+                                            className="form-input"
+                                            value={formData.sort_order}
+                                            onChange={handleChange}
+                                            placeholder="0"
+                                        />
+                                    </div>
+                                    <div className="form-group" style={{ display: 'flex', alignItems: 'center', paddingTop: 28 }}>
+                                        <input
+                                            type="checkbox"
+                                            name="published"
+                                            id="published"
+                                            checked={formData.published}
+                                            onChange={handleChange}
+                                            style={{ marginRight: 8 }}
+                                        />
+                                        <label htmlFor="published" style={{ cursor: 'pointer' }}>Publicado</label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="modal-footer">
+                                <button type="button" className="btn btn-secondary" onClick={onClose}>Cancelar</button>
+                                <button type="submit" className="btn btn-primary" disabled={loading}>
+                                    {loading ? 'Guardando...' : 'Guardar'}
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            );
+        }
+
+        // Blog Component
+        function Blog({ posts, onRefresh }) {
+            const [showModal, setShowModal] = useState(false);
+            const [editingPost, setEditingPost] = useState(null);
+            const [alert, setAlert] = useState({ type: '', message: '', active: false });
+
+            const showAlert = (type, message) => {
+                setAlert({ type, message, active: true });
+                setTimeout(() => setAlert({ ...alert, active: false }), 3000);
+            };
+
+            const handleEdit = (post) => {
+                setEditingPost(post);
+                setShowModal(true);
+            };
+
+            const handleNew = () => {
+                setEditingPost(null);
+                setShowModal(true);
+            };
+
+            const handleDelete = async (id) => {
+                if (!confirm('¿Estás seguro de eliminar este artículo?')) return;
+
+                try {
+                    await supabase.delete('blog_posts', { 'id': `eq.${id}` });
+                    showAlert('success', 'Artículo eliminado correctamente');
+                    onRefresh();
+                } catch (err) {
+                    showAlert('error', err.message);
+                }
+            };
+
+            const handleSave = async (postData) => {
+                try {
+                    if (editingPost) {
+                        await supabase.update('blog_posts', postData, { 'id': `eq.${editingPost.id}` });
+                        showAlert('success', 'Artículo actualizado correctamente');
+                    } else {
+                        await supabase.insert('blog_posts', postData);
+                        showAlert('success', 'Artículo creado correctamente');
+                    }
+                    setShowModal(false);
+                    onRefresh();
+                } catch (err) {
+                    showAlert('error', err.message);
+                }
+            };
+
+            return (
+                <>
+                    <div className="header">
+                        <h1>Blog</h1>
+                        <div className="header-actions">
+                            <button className="btn btn-primary" onClick={handleNew}>
+                                <span className="material-icons-outlined">add</span>
+                                Nuevo Artículo
+                            </button>
+                        </div>
+                    </div>
+
+                    <div className={`alert alert-${alert.type} ${alert.active ? 'active' : ''}`}>
+                        {alert.message}
+                    </div>
+
+                    <div className="card">
+                        <div className="table-container">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Título</th>
+                                        <th>Categoría</th>
+                                        <th>Autor</th>
+                                        <th>Fecha</th>
+                                        <th>Publicado</th>
+                                        <th>Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {posts.map(post => (
+                                        <tr key={post.id}>
+                                            <td>
+                                                <strong>{post.title}</strong>
+                                                <div style={{ fontSize: 12, color: 'var(--text-muted)' }}>{post.slug}</div>
+                                            </td>
+                                            <td>{post.category}</td>
+                                            <td>{post.author}</td>
+                                            <td>{formatDate(post.created_at)}</td>
+                                            <td>{post.published ? '✓' : '—'}</td>
+                                            <td>
+                                                <div className="action-buttons">
+                                                    <button className="action-btn" onClick={() => handleEdit(post)}>
+                                                        <span className="material-icons-outlined">edit</span>
+                                                    </button>
+                                                    <button className="action-btn delete" onClick={() => handleDelete(post.id)}>
+                                                        <span className="material-icons-outlined">delete</span>
+                                                    </button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    ))}
+                                    {posts.length === 0 && (
+                                        <tr>
+                                            <td colSpan="6">
+                                                <div className="empty-state">
+                                                    <span className="material-icons-outlined">article</span>
+                                                    <h3>Sin artículos</h3>
+                                                    <p>Crea tu primer artículo para el blog</p>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    )}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    {showModal && (
+                        <BlogPostModal
+                            post={editingPost}
+                            onClose={() => setShowModal(false)}
+                            onSave={handleSave}
+                        />
+                    )}
+                </>
+            );
+        }
+
+        // Blog Post Modal Component
+        function BlogPostModal({ post, onClose, onSave }) {
+            const [formData, setFormData] = useState(post || {
+                title: '',
+                slug: '',
+                excerpt: '',
+                content: '',
+                featured_image: '',
+                category: 'Noticias',
+                author: 'Unreal Studio',
+                published: true
+            });
+            const [loading, setLoading] = useState(false);
+
+            const handleChange = (e) => {
+                const { name, value, type, checked } = e.target;
+                setFormData(prev => ({
+                    ...prev,
+                    [name]: type === 'checkbox' ? checked : value
+                }));
+
+                // Auto-generate slug from title
+                if (name === 'title') {
+                    const slug = value.toLowerCase()
+                        .replace(/[^a-z0-9]+/g, '-')
+                        .replace(/^-+|-+$/g, '');
+                    setFormData(prev => ({ ...prev, slug }));
+                }
+            };
+
+            const handleSubmit = async (e) => {
+                e.preventDefault();
+                setLoading(true);
+                await onSave(formData);
+                setLoading(false);
+            };
+
+            return (
+                <div className="modal-overlay active" onClick={(e) => e.target === e.currentTarget && onClose()}>
+                    <div className="modal">
+                        <div className="modal-header">
+                            <h2 className="modal-title">{post ? 'Editar Artículo' : 'Nuevo Artículo'}</h2>
+                            <button className="modal-close" onClick={onClose}>
+                                <span className="material-icons-outlined">close</span>
+                            </button>
+                        </div>
+
+                        <form onSubmit={handleSubmit}>
+                            <div className="modal-body">
+                                <div className="form-group">
+                                    <label className="form-label">Título</label>
+                                    <input
+                                        type="text"
+                                        name="title"
+                                        className="form-input"
+                                        value={formData.title}
+                                        onChange={handleChange}
+                                        required
+                                    />
+                                </div>
+                                <div className="form-group">
+                                    <label className="form-label">Slug</label>
+                                    <input
+                                        type="text"
+                                        name="slug"
+                                        className="form-input"
+                                        value={formData.slug}
+                                        onChange={handleChange}
+                                        required
+                                    />
+                                </div>
+
+                                <div className="form-row">
+                                    <div className="form-group">
+                                        <label className="form-label">Categoría</label>
+                                        <input
+                                            type="text"
+                                            name="category"
+                                            className="form-input"
+                                            value={formData.category}
+                                            onChange={handleChange}
+                                            placeholder="Noticias, Guías, Mercado..."
+                                        />
+                                    </div>
+                                    <div className="form-group">
+                                        <label className="form-label">Autor</label>
+                                        <input
+                                            type="text"
+                                            name="author"
+                                            className="form-input"
+                                            value={formData.author}
+                                            onChange={handleChange}
+                                        />
+                                    </div>
+                                </div>
+
+                                <div className="form-group">
+                                    <label className="form-label">Extracto</label>
+                                    <textarea
+                                        name="excerpt"
+                                        className="form-textarea"
+                                        style={{ minHeight: '80px' }}
+                                        value={formData.excerpt}
+                                        onChange={handleChange}
+                                    ></textarea>
+                                </div>
+
+                                <div className="form-group">
+                                    <label className="form-label">Contenido</label>
+                                    <textarea
+                                        name="content"
+                                        className="form-textarea"
+                                        value={formData.content}
+                                        onChange={handleChange}
+                                        placeholder="Escribe el contenido aquí (acepta HTML básico)"
+                                    ></textarea>
+                                </div>
+
+                                <ImageUploader 
+                                    value={formData.featured_image} 
+                                    onChange={(url) => setFormData(prev => ({ ...prev, featured_image: url }))}
+                                    bucket="blog-images"
+                                />
+
+                                <div className="form-group" style={{ display: 'flex', alignItems: 'center', paddingTop: 12 }}>
+                                    <input
+                                        type="checkbox"
+                                        name="published"
+                                        id="published-post"
+                                        checked={formData.published}
+                                        onChange={handleChange}
+                                        style={{ marginRight: 8 }}
+                                    />
+                                    <label htmlFor="published-post" style={{ cursor: 'pointer' }}>Publicado</label>
+                                </div>
+                            </div>
+
+                            <div className="modal-footer">
+                                <button type="button" className="btn btn-secondary" onClick={onClose}>Cancelar</button>
+                                <button type="submit" className="btn btn-primary" disabled={loading}>
+                                    {loading ? 'Guardando...' : 'Guardar'}
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            );
+        }
+
+        // Metrics Component
+        function Metrics({ metrics, onRefresh }) {
+            const [formData, setFormData] = useState(metrics || {
+                units_designed: 120,
+                capital_managed: 12000000,
+                average_roi: 18.0,
+                failed_projects: 0
+            });
+            const [loading, setLoading] = useState(false);
+            const [alert, setAlert] = useState({ type: '', message: '', active: false });
+
+            useEffect(() => {
+                if (metrics) {
+                    setFormData(metrics);
+                }
+            }, [metrics]);
+
+            const showAlert = (type, message) => {
+                setAlert({ type, message, active: true });
+                setTimeout(() => setAlert({ ...alert, active: false }), 3000);
+            };
+
+            const handleChange = (e) => {
+                const { name, value } = e.target;
+                setFormData(prev => ({
+                    ...prev,
+                    [name]: value
+                }));
+            };
+
+            const handleSave = async () => {
+                setLoading(true);
+                try {
+                    const dataToSave = {
+                        units_designed: parseInt(formData.units_designed) || 0,
+                        capital_managed: parseFloat(formData.capital_managed) || 0,
+                        average_roi: parseFloat(formData.average_roi) || 0,
+                        failed_projects: parseInt(formData.failed_projects) || 0
+                    };
+
+                    await supabase.update('metrics', dataToSave, { 'id': 'eq.1' });
+                    showAlert('success', 'Métricas actualizadas correctamente');
+                    onRefresh();
+                } catch (err) {
+                    showAlert('error', err.message);
+                } finally {
+                    setLoading(false);
+                }
+            };
+
+            return (
+                <>
+                    <div className="header">
+                        <h1>Métricas</h1>
+                        <div className="header-actions">
+                            <button className="btn btn-primary" onClick={handleSave} disabled={loading}>
+                                {loading ? 'Guardando...' : 'Guardar Cambios'}
+                            </button>
+                        </div>
+                    </div>
+
+                    <div className={`alert alert-${alert.type} ${alert.active ? 'active' : ''}`}>
+                        {alert.message}
+                    </div>
+
+                    <div className="card">
+                        <div className="card-header">
+                            <h3 className="card-title">Métricas Globales</h3>
+                        </div>
+                        <p style={{ color: 'var(--text-secondary)', marginBottom: 24 }}>
+                            Estas métricas se muestran en la sección principal de la landing page.
+                        </p>
+
+                        <div className="form-row">
+                            <div className="form-group">
+                                <label className="form-label">Unidades Diseñadas</label>
+                                <input
+                                    type="number"
+                                    name="units_designed"
+                                    className="form-input"
+                                    value={formData.units_designed}
+                                    onChange={handleChange}
+                                    placeholder="120"
+                                />
+                            </div>
+                            <div className="form-group">
+                                <label className="form-label">Capital Gestionado (€)</label>
+                                <input
+                                    type="number"
+                                    name="capital_managed"
+                                    className="form-input"
+                                    value={formData.capital_managed}
+                                    onChange={handleChange}
+                                    placeholder="12000000"
+                                />
+                            </div>
+                        </div>
+
+                        <div className="form-row">
+                            <div className="form-group">
+                                <label className="form-label">ROI Medio (%)</label>
+                                <input
+                                    type="number"
+                                    step="0.1"
+                                    name="average_roi"
+                                    className="form-input"
+                                    value={formData.average_roi}
+                                    onChange={handleChange}
+                                    placeholder="18.0"
+                                />
+                            </div>
+                            <div className="form-group">
+                                <label className="form-label">Proyectos Fallidos</label>
+                                <input
+                                    type="number"
+                                    name="failed_projects"
+                                    className="form-input"
+                                    value={formData.failed_projects}
+                                    onChange={handleChange}
+                                    placeholder="0"
+                                />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="stats-grid">
+                        <div className="stat-card">
+                            <div className="stat-label">Unidades Diseñadas</div>
+                            <div className="stat-value">{formData.units_designed || 0}+</div>
+                        </div>
+                        <div className="stat-card">
+                            <div className="stat-label">Capital Gestionado</div>
+                            <div className="stat-value">{formatCurrency(formData.capital_managed || 0)}</div>
+                        </div>
+                        <div className="stat-card">
+                            <div className="stat-label">ROI Medio Neto</div>
+                            <div className="stat-value">{formData.average_roi || 0}%</div>
+                        </div>
+                        <div className="stat-card">
+                            <div className="stat-label">Proyectos Fallidos</div>
+                            <div className="stat-value">{formData.failed_projects || 0}</div>
+                        </div>
+                    </div>
+                </>
+            );
+        }
+
+        // Leads Component
+        function Leads({ leads, onRefresh }) {
+            const [alert, setAlert] = useState({ type: '', message: '', active: false });
+
+            const showAlert = (type, message) => {
+                setAlert({ type, message, active: true });
+                setTimeout(() => setAlert({ ...alert, active: false }), 3000);
+            };
+
+            const handleStatusChange = async (id, newStatus) => {
+                try {
+                    await supabase.update('leads', { status: newStatus }, { 'id': `eq.${id}` });
+                    showAlert('success', 'Estado actualizado');
+                    onRefresh();
+                } catch (err) {
+                    showAlert('error', err.message);
+                }
+            };
+
+            const handleDelete = async (id) => {
+                if (!confirm('¿Estás seguro de eliminar este lead?')) return;
+
+                try {
+                    await supabase.delete('leads', { 'id': `eq.${id}` });
+                    showAlert('success', 'Lead eliminado correctamente');
+                    onRefresh();
+                } catch (err) {
+                    showAlert('error', err.message);
+                }
+            };
+
+            return (
+                <>
+                    <div className="header">
+                        <h1>Leads</h1>
+                    </div>
+
+                    <div className={`alert alert-${alert.type} ${alert.active ? 'active' : ''}`}>
+                        {alert.message}
+                    </div>
+
+                    <div className="card">
+                        <div className="table-container">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Nombre</th>
+                                        <th>Email</th>
+                                        <th>Teléfono</th>
+                                        <th>Fuente</th>
+                                        <th>Estado</th>
+                                        <th>Fecha</th>
+                                        <th>Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {leads.map(lead => (
+                                        <tr key={lead.id}>
+                                            <td>{lead.name || 'Sin nombre'}</td>
+                                            <td>
+                                                <a href={`mailto:${lead.email}`} style={{ color: 'var(--accent)' }}>
+                                                    {lead.email}
+                                                </a>
+                                            </td>
+                                            <td>{lead.phone || '—'}</td>
+                                            <td>{lead.source}</td>
+                                            <td>
+                                                <select
+                                                    className="form-select"
+                                                    style={{ width: 'auto', padding: '6px 12px', fontSize: 12 }}
+                                                    value={lead.status}
+                                                    onChange={(e) => handleStatusChange(lead.id, e.target.value)}
+                                                >
+                                                    <option value="NEW">Nuevo</option>
+                                                    <option value="CONTACTED">Contactado</option>
+                                                    <option value="QUALIFIED">Cualificado</option>
+                                                    <option value="CONVERTED">Convertido</option>
+                                                    <option value="LOST">Perdido</option>
+                                                </select>
+                                            </td>
+                                            <td>{formatDate(lead.created_at)}</td>
+                                            <td>
+                                                <div className="action-buttons">
+                                                    <a
+                                                        href={`https://wa.me/${lead.phone?.replace(/\D/g, '')}`}
+                                                        target="_blank"
+                                                        className="action-btn"
+                                                        style={{ color: '#25d366' }}
+                                                    >
+                                                        <span className="material-icons-outlined">chat</span>
+                                                    </a>
+                                                    <button className="action-btn delete" onClick={() => handleDelete(lead.id)}>
+                                                        <span className="material-icons-outlined">delete</span>
+                                                    </button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    ))}
+                                    {leads.length === 0 && (
+                                        <tr>
+                                            <td colSpan="7">
+                                                <div className="empty-state">
+                                                    <span className="material-icons-outlined">people</span>
+                                                    <h3>Sin leads</h3>
+                                                    <p>Los leads del formulario aparecerán aquí</p>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    )}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </>
+            );
+        }
+
+        // Main App Component
+        function App() {
+            const [user, setUser] = useState(null);
+            const [loading, setLoading] = useState(true);
+            const [currentView, setCurrentView] = useState('dashboard');
+            const [projects, setProjects] = useState([]);
+            const [metrics, setMetrics] = useState(null);
+            const [leads, setLeads] = useState([]);
+            const [blogPosts, setBlogPosts] = useState([]);
+
+            // Check for existing session
+            useEffect(() => {
+                const checkSession = async () => {
+                    const storedUser = await supabase.getUser();
+                    if (storedUser) {
+                        setUser(storedUser);
+                    }
+                    setLoading(false);
+                };
+                checkSession();
+            }, []);
+
+            // Load data when user is authenticated
+            useEffect(() => {
+                if (user) {
+                    loadData();
+                }
+            }, [user]);
+
+            const loadData = async () => {
+                try {
+                    const [projectsData, metricsData, leadsData, blogData] = await Promise.all([
+                        supabase.select('projects', { order: 'sort_order.asc,created_at.desc' }),
+                        supabase.select('metrics', { filter: { id: 'eq.1' } }),
+                        supabase.select('leads', { order: 'created_at.desc' }),
+                        supabase.select('blog_posts', { order: 'created_at.desc' })
+                    ]);
+
+                    setProjects(projectsData || []);
+                    setMetrics(metricsData?.[0] || null);
+                    setLeads(leadsData || []);
+                    setBlogPosts(blogData || []);
+                } catch (err) {
+                    console.error('Error loading data:', err);
+                }
+            };
+
+            const handleLogin = (userData) => {
+                setUser(userData);
+            };
+
+            const handleLogout = async () => {
+                await supabase.signOut();
+                setUser(null);
+            };
+
+            if (loading) {
+                return (
+                    <div className="loading" style={{ height: '100vh' }}>
+                        <span className="spinner"></span>
+                        Cargando...
+                    </div>
+                );
+            }
+
+            if (!user) {
+                return <LoginPage onLogin={handleLogin} />;
+            }
+
+            return (
+                <div className="app">
+                    <Sidebar
+                        currentView={currentView}
+                        setCurrentView={setCurrentView}
+                        onLogout={handleLogout}
+                    />
+                    <main className="main-content">
+                        {currentView === 'dashboard' && (
+                            <Dashboard projects={projects} metrics={metrics} leads={leads} blogPosts={blogPosts} />
+                        )}
+                        {currentView === 'projects' && (
+                            <Projects projects={projects} onRefresh={loadData} />
+                        )}
+                        {currentView === 'metrics' && (
+                            <Metrics metrics={metrics} onRefresh={loadData} />
+                        )}
+                        {currentView === 'leads' && (
+                            <Leads leads={leads} onRefresh={loadData} />
+                        )}
+                        {currentView === 'blog' && (
+                            <Blog posts={blogPosts} onRefresh={loadData} />
+                        )}
+                    </main>
+                </div>
+            );
+        }
+
+        // Render App
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+</body>
+</html>

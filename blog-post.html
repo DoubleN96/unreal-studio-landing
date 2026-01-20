@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Post | Unreal Studio</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏝️</text></svg>">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+
+    <!-- Load Supabase Config First -->
+    <script src="supabase-config.js"></script>
+    
+    <style>
+        :root {
+            --almond: #E8DED1;
+            --primary: #8B7355;
+            --black: #0D0D0D;
+            --white: #FAFAFA;
+            --gray-600: #525252;
+            --gray-200: #E5E5E5;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--white);
+            color: var(--black);
+            line-height: 1.8;
+            margin: 0;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        header {
+            padding: 20px 0;
+            border-bottom: 1px solid var(--gray-200);
+        }
+
+        .logo {
+            text-decoration: none;
+            color: var(--black);
+            font-weight: 700;
+            font-size: 20px;
+        }
+
+        .post-header {
+            padding: 60px 0 40px;
+            text-align: center;
+        }
+
+        .post-category {
+            display: inline-block;
+            padding: 4px 12px;
+            background: var(--almond);
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 20px;
+        }
+
+        .post-title {
+            font-size: clamp(32px, 5vw, 48px);
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: 24px;
+        }
+
+        .post-meta {
+            color: var(--gray-600);
+            font-size: 14px;
+        }
+
+        .post-featured-image {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+            border-radius: 16px;
+            margin: 40px 0;
+        }
+
+        .post-content {
+            font-size: 18px;
+            color: #333;
+        }
+
+        .post-content h2 {
+            font-size: 28px;
+            margin-top: 48px;
+            margin-bottom: 24px;
+        }
+
+        .post-content p {
+            margin-bottom: 24px;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--gray-600);
+            text-decoration: none;
+            margin-bottom: 40px;
+            font-weight: 500;
+        }
+        
+        .back-link:hover {
+            color: var(--primary);
+        }
+
+        footer {
+            margin-top: 100px;
+            padding: 40px 0;
+            border-top: 1px solid var(--gray-200);
+            text-align: center;
+            font-size: 14px;
+            color: var(--gray-600);
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="container" style="display: flex; justify-content: space-between; align-items: center;">
+            <a href="index.html" class="logo">UNREAL Studio</a>
+            <a href="blog.html" style="text-decoration: none; color: var(--black); font-weight: 500;">Volver al Blog</a>
+        </div>
+    </header>
+
+    <article class="container" id="post-container">
+        <!-- Loading State -->
+        <div style="text-align: center; padding: 100px 0;">
+            Cargando artículo...
+        </div>
+    </article>
+
+    <footer>
+        <p>© 2026 Unreal Studio Madrid. Developed by Stratoma AI.</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            const params = new URLSearchParams(window.location.search);
+            const slug = params.get('slug');
+            const container = document.getElementById('post-container');
+
+            if (!slug) {
+                window.location.href = 'blog.html';
+                return;
+            }
+
+            try {
+                const { data: post, error } = await supabase.select('blog_posts', {
+                    filter: { slug: slug },
+                    limit: 1
+                });
+
+                if (error || !post || post.length === 0) {
+                    container.innerHTML = '<h1>Artículo no encontrado</h1><a href="blog.html">Volver al blog</a>';
+                    return;
+                }
+
+                const p = post[0];
+                const date = new Date(p.created_at).toLocaleDateString('es-ES', {
+                    day: 'numeric', month: 'long', year: 'numeric'
+                });
+
+                document.title = `${p.title} | Unreal Studio`;
+
+                container.innerHTML = `
+                    <div class="post-header">
+                        <span class="post-category">${p.category || 'Noticias'}</span>
+                        <h1 class="post-title">${p.title}</h1>
+                        <div class="post-meta">
+                            Por ${p.author || 'Unreal Team'} • ${date}
+                        </div>
+                    </div>
+
+                    ${p.featured_image ? `<img src="${p.featured_image}" class="post-featured-image" alt="${p.title}">` : ''}
+
+                    <div class="post-content">
+                        ${p.content || p.excerpt} 
+                        <!-- Note: In a real app, content would be markdown or HTML rendered safely -->
+                    </div>
+                    
+                    <div style="margin-top: 60px;">
+                        <a href="blog.html" class="back-link">
+                            <span class="material-icons-outlined">arrow_back</span>
+                            Volver al Blog
+                        </a>
+                    </div>
+                `;
+
+            } catch (err) {
+                console.error(err);
+                container.innerHTML = '<p>Error al cargar el artículo.</p>';
+            }
+        });
+    </script>
+</body>
+</html>
