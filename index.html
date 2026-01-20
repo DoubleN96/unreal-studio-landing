@@ -23,40 +23,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
 
-    <!-- JSON-LD Schema -->
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "RealEstateAgent",
-        "name": "Unreal Studio",
-        "description": "Inversión inmobiliaria inteligente y arquitectura premium en Bali",
-        "url": "https://unrealstudio.es",
-        "address": [
-            {
-                "@type": "PostalAddress",
-                "streetAddress": "C. de San Nicolás 17",
-                "addressLocality": "Madrid",
-                "addressCountry": "ES"
-            },
-            {
-                "@type": "PostalAddress",
-                "streetAddress": "Jl. Pratu Rai Madra No.15",
-                "addressLocality": "Bali",
-                "addressCountry": "ID"
-            }
-        ],
-        "areaServed": ["España", "Indonesia", "Europa"]
-    }
-    </script>
-
-    <div id="root"></div>
-
-    <!-- Load Supabase Config First -->
-    <script src="supabase-config.js"></script>
-    <!-- Load Main Logic -->
-    <script src="js/main.js"></script>
-
-    <!-- Header -->
+    <style>
         :root {
             --almond: #E8DED1;
             --almond-dark: #D4C4B0;
@@ -1295,6 +1262,8 @@
     </style>
 </head>
 <body>
+    <div id="root"></div>
+
     <!-- Header -->
     <header id="header">
         <div class="container">
@@ -1338,7 +1307,7 @@
 
                 <h1>Compra, invierte o co-invierte con <span class="highlight">Unreal Studio</span></h1>
 
-                <p>Genera hasta un <strong>28% anual bruto</strong> (18% neto) en desarrollos inmobiliarios exclusivos. Diseñamos, construimos y gestionamos tu inversión en el paraíso.</p>
+                <p>Genera hasta un <strong>28% anual bruto</strong> (18% neto) en desarrollos inmobiliarios exclusivos. Diseñamos, construimos y gestionamos tu inversión en el paraíso. Operamos desde Madrid.</p>
 
                 <div class="hero-cta">
                     <a href="https://calendly.com/unrealstudio" target="_blank" class="btn btn-primary">
@@ -1678,284 +1647,72 @@
                 </div>
             </div>
 
-            <!-- Stratoma AI Branding -->
-            <div style="margin-top: 24px; display: flex; justify-content: space-between; align-items: center; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 24px;">
-                <a href="https://stratoma.ai" target="_blank" style="text-decoration: none; color: var(--gray-600); font-size: 12px; display: flex; align-items: center; gap: 6px; transition: color 0.3s;" onmouseover="this.style.color='white'" onmouseout="this.style.color='var(--gray-600)'">
-                    <span>⚡ Developed by Stratoma AI</span>
-                </a>
-                
-                <a href="https://buy.stripe.com/test_12345" target="_blank" class="btn btn-secondary" style="padding: 8px 16px; font-size: 13px;">
-                    Comprar Plantilla (100€)
-                </a>
-            </div>
-            <div style="margin-top: 32px; padding-top: 24px; border-top: 1px solid rgba(255,255,255,0.1); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;">
-                <div style="display: flex; align-items: center; gap: 12px;">
-                    <span style="color: var(--gray-400); font-size: 13px;">Desarrollado por</span>
-                    <a href="https://stratomai.com" target="_blank" style="color: var(--almond); font-weight: 600; text-decoration: none; font-size: 14px;">Stratoma AI</a>
-                    <a href="https://wa.me/34611031947" target="_blank" style="color: var(--gray-400); font-size: 13px; text-decoration: none; display: flex; align-items: center; gap: 6px;">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-                        +34 611 03 19 47
-                    </a>
-                </div>
-                <button id="stripe-tip-btn" style="background: linear-gradient(135deg, #635BFF 0%, #8B5CF6 100%); color: white; border: none; padding: 12px 24px; border-radius: 8px; font-size: 13px; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 8px; transition: all 0.3s;">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line></svg>
-                    ¿Te gusta? Compra la web por 100€ y ponle tu dominio
-                </button>
+            <!-- Stratoma AI Branding (Subtle) -->
+            <div style="text-align: center; margin-top: 32px; font-size: 11px; opacity: 0.4;">
+                ⚡ Developed by <a href="https://stratomai.com" target="_blank" style="color: inherit; text-decoration: none;">Stratoma AI</a>
             </div>
         </div>
     </footer>
-
-    <!-- WhatsApp Float Button -->
-    <div class="whatsapp-float">
-        <a href="https://wa.me/34600000000?text=Hola%2C%20me%20interesa%20invertir%20con%20Unreal%20Studio" target="_blank" aria-label="Contactar por WhatsApp">
-            <svg viewBox="0 0 24 24" fill="currentColor">
-                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
-            </svg>
-        </a>
-    </div>
 
     <!-- Video Modal -->
     <div class="video-modal" id="videoModal">
         <div class="video-modal-content">
             <button class="video-modal-close" onclick="closeVideoModal()">×</button>
-            <iframe id="videoFrame" width="100%" height="100%" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            <iframe width="100%" height="100%" src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="Video de presentación" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
         </div>
     </div>
 
-    <!-- Supabase Configuration -->
-    <script src="supabase-config.js"></script>
-
+    <!-- Scripts -->
     <script>
-        // ========== SUPABASE DATA LOADING ==========
-
-        // Load metrics from Supabase
-        async function loadMetrics() {
-            try {
-                const metrics = await supabase.select('metrics', { filter: { id: 'eq.1' } });
-                if (metrics && metrics[0]) {
-                    const m = metrics[0];
-                    const metricsGrid = document.querySelector('.metrics-grid');
-                    if (metricsGrid) {
-                        metricsGrid.innerHTML = `
-                            <div class="metric-item">
-                                <div class="metric-value">${m.units_designed}+</div>
-                                <div class="metric-label">Unidades Diseñadas</div>
-                            </div>
-                            <div class="metric-item">
-                                <div class="metric-value">€${(m.capital_managed / 1000000).toFixed(0)}M</div>
-                                <div class="metric-label">Capital Gestionado</div>
-                            </div>
-                            <div class="metric-item">
-                                <div class="metric-value">${m.average_roi}%</div>
-                                <div class="metric-label">ROI Medio Neto</div>
-                            </div>
-                            <div class="metric-item">
-                                <div class="metric-value">${m.failed_projects}</div>
-                                <div class="metric-label">Proyectos Fallidos</div>
-                            </div>
-                        `;
-                    }
-                    // Update ROI in Why section
-                    const roiValue = document.querySelector('.roi-value');
-                    if (roiValue) {
-                        roiValue.textContent = `${m.average_roi}%`;
-                    }
-                }
-            } catch (err) {
-                console.log('Using static metrics:', err.message);
-            }
+        // Video Modal Logic
+        function openVideoModal() {
+            document.getElementById('videoModal').classList.add('active');
         }
 
-        // Load projects from Supabase
-        async function loadProjects() {
-            try {
-                const projects = await supabase.select('projects', {
-                    filter: { published: 'eq.true' },
-                    order: 'sort_order.asc,created_at.desc'
-                });
-
-                if (projects && projects.length > 0) {
-                    const projectsGrid = document.querySelector('.projects-grid');
-                    if (projectsGrid) {
-                        projectsGrid.innerHTML = projects.map(project => `
-                            <article class="project-card">
-                                <div class="project-image">
-                                    <img src="${project.main_image || 'https://images.unsplash.com/photo-1728048756857-d1ed820ea0e7?w=800&q=80'}" alt="${project.name}" loading="lazy">
-                                    <span class="project-status ${project.status === 'PRE_SALE' ? 'pre-sale' : ''}">
-                                        ${project.status === 'PRE_SALE' ? 'Pre-Venta' : project.status === 'IN_CONSTRUCTION' ? 'En Construcción' : 'Completado'}
-                                    </span>
-                                </div>
-                                <div class="project-content">
-                                    <div class="project-location">
-                                        <span class="material-icons-outlined">location_on</span>
-                                        ${project.location}
-                                    </div>
-                                    <h3 class="project-title">${project.name}</h3>
-                                    <div class="project-price-label">Inversión desde</div>
-                                    <div class="project-price">${new Intl.NumberFormat('es-ES', { style: 'currency', currency: project.currency || 'EUR', minimumFractionDigits: 0 }).format(project.price_from)}</div>
-                                    <div class="project-cta">
-                                        <a href="https://wa.me/34600000000?text=Hola%2C%20me%20interesa%20el%20proyecto%20${encodeURIComponent(project.name)}" class="project-link" target="_blank">
-                                            Más información
-                                            <span class="material-icons-outlined">arrow_forward</span>
-                                        </a>
-                                        <button class="project-expand" onclick="showProjectDetails('${project.id}')">
-                                            <span class="material-icons-outlined">add</span>
-                                        </button>
-                                    </div>
-                                </div>
-                            </article>
-                        `).join('');
-                    }
-                }
-            } catch (err) {
-                console.log('Using static projects:', err.message);
-            }
+        function closeVideoModal() {
+            document.getElementById('videoModal').classList.remove('active');
         }
 
-        // Show project details (placeholder for modal)
-        function showProjectDetails(projectId) {
-            // Future: Open a modal with project details
-            console.log('Show project:', projectId);
-        }
-
-        // Submit lead to Supabase
-        async function submitLead(email, source = 'WEBSITE') {
-            try {
-                await supabase.insert('leads', {
-                    email: email,
-                    source: source,
-                    status: 'NEW'
-                });
-                return { success: true };
-            } catch (err) {
-                console.error('Error submitting lead:', err);
-                return { success: false, error: err.message };
-            }
-        }
-
-        // Initialize Supabase data on page load
-        document.addEventListener('DOMContentLoaded', () => {
-            // Try to load data from Supabase (graceful fallback to static)
-            loadMetrics();
-            loadProjects();
+        // Close on escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') closeVideoModal();
         });
 
-        // ========== ORIGINAL SCRIPTS ==========
+        // Close on click outside
+        document.getElementById('videoModal').addEventListener('click', function(e) {
+            if (e.target === this) closeVideoModal();
+        });
 
-        // Header scroll effect
-        const header = document.getElementById('header');
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 100) {
+        // Sticky Header
+        window.addEventListener('scroll', function() {
+            const header = document.getElementById('header');
+            if (window.scrollY > 50) {
                 header.classList.add('scrolled');
             } else {
                 header.classList.remove('scrolled');
             }
         });
-
-        // Video modal
-        function openVideoModal() {
-            const modal = document.getElementById('videoModal');
-            const frame = document.getElementById('videoFrame');
-            frame.src = 'https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1';
-            modal.classList.add('active');
-            document.body.style.overflow = 'hidden';
-        }
-
-        function closeVideoModal() {
-            const modal = document.getElementById('videoModal');
-            const frame = document.getElementById('videoFrame');
-            frame.src = '';
-            modal.classList.remove('active');
-            document.body.style.overflow = '';
-        }
-
-        document.getElementById('videoModal').addEventListener('click', (e) => {
-            if (e.target === e.currentTarget) {
-                closeVideoModal();
-            }
-        });
-
-        // Smooth scroll for anchor links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                const href = this.getAttribute('href');
-                if (href !== '#') {
-                    e.preventDefault();
-                    const target = document.querySelector(href);
-                    if (target) {
-                        target.scrollIntoView({
-                            behavior: 'smooth',
-                            block: 'start'
-                        });
-                    }
-                }
-            });
-        });
-
-        // Form submission with Supabase
-        const ctaForm = document.querySelector('.cta-form');
-        if (ctaForm) {
-            ctaForm.addEventListener('submit', async (e) => {
-                e.preventDefault();
-                const emailInput = ctaForm.querySelector('input[type="email"]');
-                const submitBtn = ctaForm.querySelector('button[type="submit"]');
-                const email = emailInput.value;
-
-                // Show loading state
-                const originalText = submitBtn.textContent;
-                submitBtn.textContent = 'Enviando...';
-                submitBtn.disabled = true;
-
-                // Submit to Supabase
-                const result = await submitLead(email, 'CTA_FORM');
-
-                if (result.success) {
-                    // Show success and redirect to Calendly
-                    submitBtn.textContent = '¡Enviado!';
-                    submitBtn.style.background = '#22C55E';
-                    setTimeout(() => {
-                        window.open(`https://calendly.com/unrealstudio?email=${encodeURIComponent(email)}`, '_blank');
-                        // Reset form
-                        emailInput.value = '';
-                        submitBtn.textContent = originalText;
-                        submitBtn.style.background = '';
-                        submitBtn.disabled = false;
-                    }, 500);
-                } else {
-                    // Still redirect even if Supabase fails
-                    window.open(`https://calendly.com/unrealstudio?email=${encodeURIComponent(email)}`, '_blank');
-                    submitBtn.textContent = originalText;
-                    submitBtn.disabled = false;
-                }
-            });
-        }
-
-        // Stripe tip button
-        const stripeTipBtn = document.getElementById('stripe-tip-btn');
-        if (stripeTipBtn) {
-            stripeTipBtn.addEventListener('click', async () => {
-                stripeTipBtn.disabled = true;
-                stripeTipBtn.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="animate-spin"><circle cx="12" cy="12" r="10" stroke-dasharray="32" stroke-dashoffset="12"></circle></svg> Procesando...';
-
-                // Stripe Payment Link - direct checkout
-                window.open('https://buy.stripe.com/14AbJ11DE0bKgO64ry3wQ06', '_blank');
-
-                setTimeout(() => {
-                    stripeTipBtn.disabled = false;
-                    stripeTipBtn.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line></svg> ¿Te gusta? Compra la web por 100€ y ponle tu dominio';
-                }, 2000);
-            });
-
-            stripeTipBtn.addEventListener('mouseenter', () => {
-                stripeTipBtn.style.transform = 'translateY(-2px)';
-                stripeTipBtn.style.boxShadow = '0 8px 25px rgba(99,91,255,0.4)';
-            });
-
-            stripeTipBtn.addEventListener('mouseleave', () => {
-                stripeTipBtn.style.transform = 'translateY(0)';
-                stripeTipBtn.style.boxShadow = 'none';
-            });
-        }
     </script>
+
+    <!-- Load Supabase Config First -->
+    <script src="supabase-config.js"></script>
+    <!-- Load Main Logic -->
+    <script src="js/main.js"></script>
+    
+    <!-- Branding Overlay (Stripe Button) -->
+    <div id="stratoma-branding" style="position: fixed; bottom: 20px; left: 20px; z-index: 10000; display: flex; align-items: center; gap: 10px;">
+        <a href="https://buy.stripe.com/test_12345" target="_blank" style="background: #000; color: #fff; padding: 10px 20px; border-radius: 50px; font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 600; text-decoration: none; box-shadow: 0 4px 12px rgba(0,0,0,0.15); transition: transform 0.2s;">
+            Comprar Plantilla (100€)
+        </a>
+        <div style="background: rgba(255,255,255,0.9); backdrop-filter: blur(5px); padding: 8px 12px; border-radius: 12px; border: 1px solid rgba(0,0,0,0.1); font-family: 'Inter', sans-serif; font-size: 10px; color: #666; box-shadow: 0 4px 12px rgba(0,0,0,0.05);">
+            <div style="font-weight: 600; color: #000; margin-bottom: 2px;">Desarrollado por</div>
+            <div style="display: flex; align-items: center; gap: 4px;">
+                <span style="font-weight: 700;">Stratoma AI</span>
+            </div>
+            <div style="margin-top: 4px; border-top: 1px solid #eee; padding-top: 4px;">+34 611 03 19 47</div>
+            <div style="margin-top: 2px; font-size: 9px; opacity: 0.8;">¿Te gusta? Compra la web por 100€ y ponle tu dominio</div>
+            <button onclick="this.parentElement.parentElement.remove()" style="position: absolute; top: -8px; right: -8px; background: #fff; border: 1px solid #eee; width: 20px; height: 20px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 12px; color: #666;">×</button>
+        </div>
+    </div>
 </body>
 </html>
