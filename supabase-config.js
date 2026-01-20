@@ -133,7 +133,7 @@ class SupabaseClient {
 
         if (options.filter) {
             Object.entries(options.filter).forEach(([key, value]) => {
-                params.append(key, value);
+                params.append(key, `eq.${value}`);
             });
         }
 
@@ -187,7 +187,7 @@ class SupabaseClient {
         const params = new URLSearchParams();
 
         Object.entries(filter).forEach(([key, value]) => {
-            params.append(key, value);
+            params.append(key, `eq.${value}`);
         });
 
         url += `?${params.toString()}`;
@@ -212,7 +212,7 @@ class SupabaseClient {
         const params = new URLSearchParams();
 
         Object.entries(filter).forEach(([key, value]) => {
-            params.append(key, value);
+            params.append(key, `eq.${value}`);
         });
 
         url += `?${params.toString()}`;
